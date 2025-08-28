@@ -1,0 +1,120 @@
+Task Title: Companies API Development
+Objective
+To implement an API module for managing “Company” data, including filters and optional frontend rendering.
+Task Details
+1. Backend Development (Node.js + Express + MongoDB)
+Build RESTful APIs:To manage Data 
+The api should support searching by different attributes.
+Company Data should be stored in Mongodb Collections.
+2. Optional Frontend (React.js)
+Create a simple UI to display companies in a table or card format.
+Add filter controls (dropdowns/inputs) to fetch data using the API filters.
+
+Required Tools : Node.js, MongoDB, VS Code, Test API - Use Thunder Client (VS Code extension) or Postman 
+
+Setup :
+mkdir companies-api
+cd companies-api
+npm init -y
+npm install express mongoose cors dotenv
+
+npx create-react-app companies-frontend
+cd companies-frontend
+npm install axios
+
+Database setup:
+mongosh
+use companiesDB
+db.createCollection("companies")
+
+
+ project-root/
+│── companies-api/          👈 Backend (Node + Express + MongoDB)
+│    │── server.js
+│    │── .env
+│    │── seed.js       
+│    │── models/
+│    │    └── Company.js
+│    │── routes/
+│    │    └── companyRoutes.js
+│    │── controllers/
+│    │    └── companyController.js
+│
+│── companies-frontend/     👈 Frontend (React.js)
+│    │── src/
+│    │    └── App.js
+ 
+⚡ Running Both Together : 
+Start backend (from companies-api):
+node server.js
+→ Runs at http://localhost:5000
+ 
+Start frontend (from companies-frontend):
+npm start
+→ Runs at http://localhost:3000
+
+also run 1 time at starting to get seed data (from companies-api):
+node seed.js
+
+Insert a Company (Test Data) : 3 ways
+Option 1: Using Thunder Client (VS Code) or Postman
+Option 2: Using Mongo Shell
+Option 3: simply by running seed.js
+
+✅ With this setup:
+Backend (/api/companies) gives CRUD + filter APIs.
+Frontend fetches and displays results in a table with filters.
+
+👉 Use Thunder Client/Postman for testing all 4 operations (POST, GET, PUT, DELETE).
+👉 Use React frontend just for viewing + filtering companies.
+
+⚡ How to test CRUD using Thunder Client :
+Open VS Code.
+Install the extension Thunder Client from Extensions (search in sidebar).
+You’ll see a small thunderbolt icon ⚡ on the sidebar → click it.
+
+Now you can start making requests:
+1. Create Company (POST)
+Method: POST
+URL: http://localhost:5000/api/companies
+Body → Select JSON and enter:
+{
+  "name": "FinTechPro",
+  "industry": "Finance",
+  "location": "Mumbai, India",
+  "foundedYear": 2020,
+  "employees": 60
+}
+👉 Click Send → You should get a 201 Created response with the new company object.
+
+2. Read All Companies (GET)
+Method: GET
+URL: http://localhost:5000/api/companies
+👉 Click Send → You’ll see all companies from MongoDB.
+✅ Try filters:
+http://localhost:5000/api/companies?industry=Software
+http://localhost:5000/api/companies?location=Mumbai
+
+3. Read Single Company (GET by ID)
+First copy a company’s _id from the previous GET response.
+Method: GET
+URL: http://localhost:5000/api/companies/<id>
+Example:
+http://localhost:5000/api/companies/64b2fcb82f10d12ab3e8a7c4
+
+4. Update Company (PUT)
+Method: PUT
+URL: http://localhost:5000/api/companies/<id>
+Body → JSON:
+{
+  "employees": 400,
+  "location": "Bengaluru, India"
+}
+👉 Click Send → You’ll see the updated company.
+
+5. Delete Company (DELETE)
+Method: DELETE
+URL: http://localhost:5000/api/companies/<id>
+👉 Click Send → Response will confirm deletion.
+
+
